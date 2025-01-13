@@ -1,15 +1,16 @@
 // Definition of the types used in the application
 
-interface Destination {
+interface DestinationProps {
     time: string;
     activity: string;
     duration: string;
     price: number;
     rating: number;
+    category: string;
 }
 
-interface Itenary {
-    destination: Destination[];
+interface ItenaryProps {
+    destination: DestinationProps[];
     total_expense: number;
     total_duration: string;
 }
