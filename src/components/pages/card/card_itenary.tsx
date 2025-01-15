@@ -22,7 +22,9 @@ const CardItenary:React.FC<DestinationProps> = ({
         </p>
         <p className=""></p>
         <div className="flex justify-between mt-4">
-          <div className="flex items-center">
+          <div className="">
+          {rating && (
+            <div className="flex items-center">
             <div className="flex w-28">
              {Array.from({ length: 5 }).map((_, index) => (
                 <StarIcon
@@ -34,6 +36,8 @@ const CardItenary:React.FC<DestinationProps> = ({
             <p className="ml-3">
               4.5 <span className="text-gray-500 underline">by google</span>
             </p>
+          </div>
+          )}
           </div>
           <div className="text-2xl font-medium">
             <p>Rp {price}</p>
