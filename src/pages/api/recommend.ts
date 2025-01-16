@@ -5,7 +5,7 @@ import csvParser from 'csv-parser';
 import { DateTime } from 'luxon';
 
 // Fungsi membaca dataset dari CSV
-async function loadDataset() {
+async function loadDataset(): Promise<any[]> {
   const datasetPath = path.resolve(process.cwd(), './datasets/data_final.csv');
   const data: any[] = [];
 
@@ -53,10 +53,18 @@ async function calculateTravelTime(
   }
 }
 
-async function generateScheduleEnhanced(weather, city, budget, minRating, startTime, visitDay, maxDuration = 720) {
+async function generateScheduleEnhanced(
+    weather: string,
+    city: string,
+    budget: number,
+    minRating: number,
+    startTime: string,
+    visitDay: string,
+    maxDuration = 720
+) {
   const data = await loadDataset(); // Muat dataset dari CSV
   const filteredData = data.filter(
-    (item) =>
+    (item:any) =>
       item.City.toLowerCase() === city.toLowerCase() &&
       item.Rating >= minRating &&
       item.Weather_Suitability.includes(weather)
@@ -69,7 +77,7 @@ async function generateScheduleEnhanced(weather, city, budget, minRating, startT
   let previousCoords = null;
 
   let mealTimes = { Lunch: "12:00", Dinner: "18:00" };
-  let mealsTaken = { Lunch: false, Dinner: false };
+  let mealsTaken:any = { Lunch: false, Dinner: false };
 
   for (const destination of filteredData) {
     if (remainingBudget < destination.Price || totalTime >= maxDuration) break;
