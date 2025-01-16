@@ -12,5 +12,4 @@ interface DestinationProps {
 interface ItenaryProps {
     destination: DestinationProps[];
     total_expense: number;
-    total_duration: string;
 }

@@ -5,7 +5,7 @@ import ArrowRightIcons from '../icons/arrow_right'
 
 const ItenarySection = () => {
   const [inputData, setInputData] = useState({
-    current_weather: "",
+    current_weather: "Sunny",
     city: "",
     budget: 0,
     visit_day: "",
@@ -16,222 +16,67 @@ const ItenarySection = () => {
   const [loading, setLoading] = useState(false);
   const [slice, setSlice] = useState(0);
 
-  const generateItinerary = () => {
+  const fetchData = async () => {
+    if (!inputData.city) {
+      alert("City cannot be empty");
+      return;
+    }
+    if (!inputData.visit_day) {
+      alert("Visit day cannot be empty");
+      return;
+    }
+    if (!inputData.budget) {
+      alert("Budget cannot be empty");
+      return;
+    }
+    if (!inputData.min_rating) {
+      alert("Minimum rating cannot be empty");
+      return;
+    }
+    if (!inputData.start_time) {
+      alert("Start time cannot be empty");
+      return
+    }
+    if (inputData.budget < 0) {
+      alert("Budget must be greater than 0");
+      return;
+    }
+    if (inputData.min_rating < 0) {
+      alert("Minimum rating must be greater than 0");
+      return;
+    }
+    
+    try{
+      
     setLoading(true);
-    const itenary = {
-      Schedule: [
-        {
-          Time: "08:00 - 09:26",
-          Activity: "Ekowisata Mangrove Wonorejo",
-          Duration: "86 menit",
-          Price: 0,
-          Rating: 4.5,
-          Category: "Tourism"
+      const urlApi = "/api/recommend";
+      const response = await fetch(urlApi, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
         },
-        {
-          Time: "09:26 - 09:50",
-          Activity: "Travel to next destination",
-          Duration: "24 menit",
-          Price: "-"
-        },
-        {
-          Time: "09:50 - 11:45",
-          Activity: "Taman Harmoni Keputih",
-          Duration: "115 menit",
-          Price: 0,
-          Rating: 4.5,
-          Category: "Tourism"
-        },
-        {
-          Time: "11:45 - 12:05",
-          Activity: "Travel to next destination",
-          Duration: "20 menit",
-          Price: "-"
-        },
-        {
-          Time: "12:05 - 14:01",
-          Activity: "Air Mancur Menari",
-          Duration: "116 menit",
-          Price: 35000,
-          Rating: 4.5,
-          Category: "Tourism"
-        },
-        {
-          Time: "12:00 - 13:00",
-          Activity: "Meal at The Duck King",
-          Duration: "60 menit",
-          Price: 150000,
-          Rating: 4.5,
-          Category: "Food"
-        },
-        {
-          Time: "14:01 - 14:26",
-          Activity: "Travel to hotel",
-          Duration: "25 menit",
-          Price: "-"
-        },
-        {
-          Time: "14:00",
-          Activity: "Check-in at Midtown Hotel Surabaya",
-          Duration: "Overnight",
-          Price: 814527,
-          Rating: 4.5,
-          Category: "Lodging"
-        },
-        {
-          Time: "14:26 - 14:49",
-          Activity: "Travel to next destination",
-          Duration: "23 menit",
-          Price: "-"
-        },
-        {
-          Time: "14:49 - 17:30",
-          Activity: "Taman Prestasi",
-          Duration: "161 menit",
-          Price: 0,
-          Rating: 4.5,
-          Category: "Tourism"
-        },
-        {
-          Time: "17:30 - 17:55",
-          Activity: "Travel to next destination",
-          Duration: "25 menit",
-          Price: "-",
-        },
-        {
-          Time: "17:55 - 19:07",
-          Activity: "Taman Kunang-Kunang",
-          Duration: "72 menit",
-          Price: 0,
-          Rating: 4.5,
-          Category: "Tourism"
-        },
-        {
-          Time: "19:07 - 19:28",
-          Activity: "Back to hotel",
-          Duration: "21 menit",
-          Price: "-"
-        }
-      ],
-      Total_Expenses: 999527,
-      Remaining_Budget: 473
-    }
-    setItinerary({
-      Schedule: itenary.Schedule.slice(slice, slice + 3),
-      Total_Expenses: itenary.Total_Expenses,
-      Remaining_Budget: itenary.Remaining_Budget
-    }); 
-    setLoading(false);
-  };
-
-  const fetch = async () => {
-    const itenary = {
-      Schedule: [
-        {
-          Time: "08:00 - 09:26",
-          Activity: "Ekowisata Mangrove Wonorejo",
-          Duration: "86 menit",
-          Price: 0,
-          Rating: 4.5,
-          Category: "Tourism"
-        },
-        {
-          Time: "09:26 - 09:50",
-          Activity: "Travel to next destination",
-          Duration: "24 menit",
-          Price: "-"
-        },
-        {
-          Time: "09:50 - 11:45",
-          Activity: "Taman Harmoni Keputih",
-          Duration: "115 menit",
-          Price: 0,
-          Rating: 4.5,
-          Category: "Tourism"
-        },
-        {
-          Time: "11:45 - 12:05",
-          Activity: "Travel to next destination",
-          Duration: "20 menit",
-          Price: "-"
-        },
-        {
-          Time: "12:05 - 14:01",
-          Activity: "Air Mancur Menari",
-          Duration: "116 menit",
-          Price: 35000,
-          Rating: 4.5,
-          Category: "Tourism"
-        },
-        {
-          Time: "12:00 - 13:00",
-          Activity: "Meal at The Duck King",
-          Duration: "60 menit",
-          Price: 150000,
-          Rating: 4.5,
-          Category: "Food"
-        },
-        {
-          Time: "14:01 - 14:26",
-          Activity: "Travel to hotel",
-          Duration: "25 menit",
-          Price: "-"
-        },
-        {
-          Time: "14:00",
-          Activity: "Check-in at Midtown Hotel Surabaya",
-          Duration: "Overnight",
-          Price: 814527,
-          Rating: 4.5,
-          Category: "Lodging"
-        },
-        {
-          Time: "14:26 - 14:49",
-          Activity: "Travel to next destination",
-          Duration: "23 menit",
-          Price: "-"
-        },
-        {
-          Time: "14:49 - 17:30",
-          Activity: "Taman Prestasi",
-          Duration: "161 menit",
-          Price: 0,
-          Rating: 4.5,
-          Category: "Tourism"
-        },
-        {
-          Time: "17:30 - 17:55",
-          Activity: "Travel to next destination",
-          Duration: "25 menit",
-          Price: "-",
-        },
-        {
-          Time: "17:55 - 19:07",
-          Activity: "Taman Kunang-Kunang",
-          Duration: "72 menit",
-          Price: 0,
-          Rating: 4.5,
-          Category: "Tourism"
-        },
-        {
-          Time: "19:07 - 19:28",
-          Activity: "Back to hotel",
-          Duration: "21 menit",
-          Price: "-"
-        }
-      ],
-      Total_Expenses: 999527,
-      Remaining_Budget: 473
-    }
-    // timeouts for loading
-    setTimeout(() => {
-      setItinerary({
-        Schedule: itenary.Schedule.slice(slice, slice + 3),
-        Total_Expenses: itenary.Total_Expenses,
-        Remaining_Budget: itenary.Remaining_Budget
+        body: JSON.stringify(inputData),
       });
+      const data = await response.json();
+      if(data){
+        const slicedData = data.destination.slice(0, 3);
+        setSlice(0);
+        setItinerary({ ...itinerary, destination: slicedData });
+      }
+      console.log(data);  
+    } catch (error) {
+      console.log(error);
+    } finally {
       setLoading(false);
-    }, 2000);
+    }
+  }
+
+  const generateItinerary = () => {
+    const data = itinerary.destination;
+    if (data) {
+      const slicedData = data.slice(slice, slice + 3);
+      setItinerary({ ...itinerary, destination: slicedData });
+    }
   }
 
 
@@ -280,6 +125,7 @@ const ItenarySection = () => {
                   onChange={handleChange}
                   placeholder="Enter your city"
                   className="w-full mt-1 p-2 border rounded-lg outline-none"
+                  required
                 />
               </div>
               <div className="mb-4 bg-white p-4 rounded-lg">
@@ -296,6 +142,7 @@ const ItenarySection = () => {
                   onChange={handleChange}
                   placeholder="Enter visit day"
                   className="w-full mt-1 p-2 border rounded-lg outline-none"
+                  required
                 />
               </div>
               <div className="mb-4 bg-white p-4 rounded-lg">
@@ -312,6 +159,7 @@ const ItenarySection = () => {
                   onChange={handleChange}
                   placeholder="Enter your budget"
                   className="w-full mt-1 p-2 border rounded-lg outline-none"
+                  required
                 />
               </div>
               <div className="flex gap-4">
@@ -329,6 +177,7 @@ const ItenarySection = () => {
                     onChange={handleChange}
                     placeholder="Enter minimum rating"
                     className="w-full mt-1 p-2 border rounded-lg outline-none"
+                    required
                   />
                 </div>
                 <div className="mb-4 w-full bg-white p-4 rounded-lg">
@@ -344,12 +193,13 @@ const ItenarySection = () => {
                     value={inputData.start_time}
                     onChange={handleChange}
                     className="w-full mt-1 p-2 border rounded-lg outline-none"
+                    required
                   />
                 </div>
               </div>
               <button
                 type="button"
-                onClick={fetch}
+                onClick={fetchData}
                 className="w-full bg-black text-white p-2 rounded-lg hover:bg-gray-800 transition"
               >
                 Generate Itinerary
@@ -365,15 +215,15 @@ const ItenarySection = () => {
                 <p className="text-2xl font-bold">Loading...</p>
                 </div>
                 ) : (
-                  itinerary.Schedule?.map((item: any, index: number) => (
+                  itinerary.destination?.map((item: DestinationProps, index: number) => (
                     <CardItenary 
                     key={index} 
-                    time = {item.Time}
-                    activity={item.Activity}
-                    duration = {item.Duration}
-                    price = {item.Price}
-                    rating = {item.Rating}
-                    category = {item.Category}
+                    time = {item.time}
+                    activity={item.activity}
+                    duration = {item.duration}
+                    price = {item.price}
+                    rating = {item.rating}
+                    category = {item.category}
                      />
                   ))
                 )}
